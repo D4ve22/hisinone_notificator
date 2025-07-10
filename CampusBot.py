@@ -7,11 +7,12 @@ import json
 import os
 import pytz
 from datetime import datetime
+from dotenv import load_dotenv
 
 # Telegram Bot Token und Chat-ID konfigurieren
-TELEGRAM_BOT_TOKEN = 'ENTER TELEGRAM BOT TOKEN'
-TELEGRAM_CHAT_ID = 'ENTER TELEGRAM CHAT ID'
-RSS_FEED_URL = 'ENTER PERSONAL FEED URL FROM HISINONE'
+TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
+TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
+RSS_FEED_URL = os.getenv("RSS_FEED_URL")
 
 bot = telegram.Bot(token=TELEGRAM_BOT_TOKEN)
 
