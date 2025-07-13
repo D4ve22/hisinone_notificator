@@ -9,6 +9,8 @@ import pytz
 from datetime import datetime
 from dotenv import load_dotenv
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
 load_dotenv()
 
 # Telegram Bot Token und Chat-ID konfigurieren
@@ -18,16 +20,18 @@ RSS_FEED_URL = os.getenv("RSS_FEED_URL")
 
 bot = telegram.Bot(token=TELEGRAM_BOT_TOKEN)
 
-dataFile = open('data.json', "r+")
+data_path = os.path.join(BASE_DIR, "data.json")
+dataFile = open(data_path, "r+")
 data = json.load(dataFile)
 dataFile.close()
 
-logFileSize = os.stat('log.txt').st_size
+log_path = os.path.join(BASE_DIR, "log.txt")
+logFileSize = os.stat(log_path).st_size
 data["log_file_size"] = logFileSize
 if logFileSize > 536870912:
-    logFile = open("log.txt", "w")
+    logFile = open(log_path, "w")
 else:
-    logFile = open("log.txt", "a")
+    logFile = open(log_path, "a")
 logText = ""
 
 last_entry_title = data['last_entry_title']
@@ -89,7 +93,7 @@ async def main():
     data["last_execution"] = getTime()
     json_string = json.dumps(data)
 
-    dataFile = open('data.json', "w")
+    dataFile = open(data_path, "w")
     dataFile.write(json_string)
     logFile.write(logText)
 
